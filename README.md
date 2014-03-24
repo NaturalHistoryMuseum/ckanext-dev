@@ -1,12 +1,12 @@
 ckanext-dev
 ===========
 
-CKAN extension for development tools. This provides:
+CKAN extension that provides various development tools :
 
 - An IPython shell, run within the CKAN environment, started as a paster script ;
 - A configuration option to start PyCharm remote debugger session
 
-setup
+Setup
 ------
 
 To enable the remote debugger session, you need:
@@ -15,6 +15,8 @@ To enable the remote debugger session, you need:
   distribution, see http://www.jetbrains.com/pycharm/webhelp/remote-debugging.html)
 
 - Add the line 'debug.enabled = True' to your configuration file
+
+- Setup a Remote Debugger within PyCharm, using port 8888 (or as defined by debug.host.port).
 
 You may optionally define:
 - debug.host.ip for the host IP (defaults to 10.0.2.2 which is the default host IP when using Vagrant) ;
@@ -28,4 +30,4 @@ Usage
 
 To use the paster launched shell do:
 
-paster --plugin=ckanext-dev shell -c <path to your config file>
+paster --plugin=ckanext-dev shell -c &lt;path to your config file&gt;
