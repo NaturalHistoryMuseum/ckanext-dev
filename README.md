@@ -22,7 +22,8 @@ You may optionally define:
 - debug.host.ip for the host IP (defaults to 10.0.2.2 which is the default host IP when using Vagrant) ;
 - debug.host.port for the host port (defaults to 8888; it needs to match the setting in PyCharm) ;
 - debug.output.stdout_to_server to send stdout to the debugging host (defaults to True) ;
-- debug.output.stderr_to_server to send stderr to the debugging host (defaults to True)
+- debug.output.stderr_to_server to send stderr to the debugging host (defaults to True) ;
+- debug.suspend defines whether the debugger should break as soon as it is started (defaults to False).
 
 
 Usage

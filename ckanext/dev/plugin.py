@@ -1,7 +1,6 @@
 import logging
 
 import ckan.plugins as p
-from ckan.common import _
 
 try:
     import pydevd
@@ -26,8 +25,13 @@ class DevPlugin(p.SingletonPlugin):
         host_port = config.get('debug.host.port', '8888')
         stdout = config.get('debug.output.stdout_to_server', 'True') in true_string
         stderr = config.get('debug.output.stderr_to_server', 'True') in true_string
+        suspend = config.get('debug.suspend', 'False') in true_string
         if debug:
+            # We don't yet have a translator, so messages will be in english only.
+            log.info("Initiating remote debugging session to {}:{}".format(host_ip, host_port))
             try:
-                pydevd.settrace(host_ip, port=int(host_port), stdoutToServer=stdout, stderrToServer=stderr)
+                pydevd.settrace(host_ip, port=int(host_port), stdoutToServer=stdout, stderrToServer=stderr, suspend=suspend)
             except NameError:
-                log.error(_("debug.enabled set to True, but pydevd is missing."))
+                log.warning("debug.enabled set to True, but pydevd is missing.")
+            except SystemExit:
+                log.warning("Failed to connect to debug server; is it started?")
