@@ -14,16 +14,17 @@ To enable the remote debugger session, you need:
 - Install the pycharm-debug.egg package on the remote machine (this file is part of the PyCharm
   distribution, see http://www.jetbrains.com/pycharm/webhelp/remote-debugging.html)
 
-- Add the line 'debug.enabled = True' to your configuration file
+- Add the line 'debug.remote = True' to your configuration file (this is independent from Ckan's
+  debug setting ; both can be enabled or disabled separately) ;
 
 - Setup a Remote Debugger within PyCharm, using port 8888 (or as defined by debug.host.port).
 
 You may optionally define:
-- debug.host.ip for the host IP (defaults to 10.0.2.2 which is the default host IP when using Vagrant) ;
-- debug.host.port for the host port (defaults to 8888; it needs to match the setting in PyCharm) ;
-- debug.output.stdout_to_server to send stdout to the debugging host (defaults to True) ;
-- debug.output.stderr_to_server to send stderr to the debugging host (defaults to True) ;
-- debug.suspend defines whether the debugger should break as soon as it is started (defaults to False).
+- debug.remote.host.ip for the host IP (defaults to 10.0.2.2 which is the default host IP when using Vagrant) ;
+- debug.remote.host.port for the host port (defaults to 8888; it needs to match the setting in PyCharm) ;
+- debug.remote.stdout_to_server to send stdout to the debugging host (defaults to True) ;
+- debug.remote.stderr_to_server to send stderr to the debugging host (defaults to True) ;
+- debug.remote.suspend defines whether the debugger should break as soon as it is started (defaults to False).
 
 
 Usage

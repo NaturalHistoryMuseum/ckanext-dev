@@ -1,6 +1,7 @@
 import logging
 
 import ckan.plugins as p
+from paste.deploy.converters import asbool
 
 try:
     import pydevd
@@ -19,13 +20,15 @@ class DevPlugin(p.SingletonPlugin):
     p.implements(p.IConfigurer)
 
     def update_config(self, config):
-        true_string = ['yes', 'Yes', 'true', 'True', '1']
-        debug = config.get('debug.enabled', 'False')  in true_string
-        host_ip = config.get('debug.host.ip', '10.0.2.2')
-        host_port = config.get('debug.host.port', '8888')
-        stdout = config.get('debug.output.stdout_to_server', 'True') in true_string
-        stderr = config.get('debug.output.stderr_to_server', 'True') in true_string
-        suspend = config.get('debug.suspend', 'False') in true_string
+        self._start_debug_client(config)
+
+    def _start_debug_client(self, config):
+        debug = asbool(config.get('debug.remote', 'False'))
+        host_ip = config.get('debug.remote.host.ip', '10.0.2.2')
+        host_port = config.get('debug.remote.host.port', '8888')
+        stdout = asbool(config.get('debug.remote.stdout_to_server', 'True'))
+        stderr = asbool(config.get('debug.remote.stderr_to_server', 'True'))
+        suspend = asbool(config.get('debug.remote.suspend', 'False'))
         if debug:
             # We don't yet have a translator, so messages will be in english only.
             log.info("Initiating remote debugging session to {}:{}".format(host_ip, host_port))
