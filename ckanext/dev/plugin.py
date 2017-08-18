@@ -19,17 +19,20 @@ class DevPlugin(p.SingletonPlugin):
         self._start_debug_client(config)
 
     def _start_debug_client(self, config):
-        egg_dir = config.get('debug.egg_dir', None)
+        egg_dir = config.get('debug.remote.egg_dir', None)
         # If we have an egg directory, add the egg to the system path
         # If not set, user is expected to have made pycharm egg findable
         if egg_dir:
             sys.path.append(os.path.join(egg_dir, 'pycharm-debug.egg'))
 
-        import pydevd
+        try:
+            import pydevd
+        except ImportError:
+            pass
 
         debug = asbool(config.get('debug.remote', 'False'))
         host_ip = config.get('debug.remote.host.ip', '10.0.2.2')
-        host_port = config.get('debug.remote.host.port', '8888')
+        host_port = config.get('debug.remote.host.port', '63342')
         stdout = asbool(config.get('debug.remote.stdout_to_server', 'True'))
         stderr = asbool(config.get('debug.remote.stderr_to_server', 'True'))
         suspend = asbool(config.get('debug.remote.suspend', 'False'))
