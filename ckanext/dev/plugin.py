@@ -1,15 +1,11 @@
+import os
+import sys
 import logging
 
 import ckan.plugins as p
 from paste.deploy.converters import asbool
 
-try:
-    import pydevd
-except ImportError:
-    pass
-
 log = logging.getLogger(__name__)
-
 
 class DevPlugin(p.SingletonPlugin):
     """Development plugin.
@@ -23,6 +19,14 @@ class DevPlugin(p.SingletonPlugin):
         self._start_debug_client(config)
 
     def _start_debug_client(self, config):
+        egg_dir = config.get('debug.egg_dir', None)
+        # If we have an egg directory, add the egg to the system path
+        # If not set, user is expected to have made pycharm egg findable
+        if egg_dir:
+            sys.path.append(os.path.join(egg_dir, 'pycharm-debug.egg'))
+
+        import pydevd
+
         debug = asbool(config.get('debug.remote', 'False'))
         host_ip = config.get('debug.remote.host.ip', '10.0.2.2')
         host_port = config.get('debug.remote.host.port', '8888')
