@@ -1,6 +1,8 @@
 ckanext-dev
 ===========
 
+## This extension is no longer maintained.
+
 CKAN extension that provides various development tools :
 
 - An IPython shell, run within the CKAN environment, started as a paster script ;
